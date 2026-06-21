@@ -1,5 +1,6 @@
 package org.yearup.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,14 +23,14 @@ public class ProductsController {
 
     @GetMapping
     @PreAuthorize("permitAll()")
-    public List<Product> listAll(@RequestParam(required = false) Integer categoryId,
-                                 @RequestParam(required = false) Double minPrice,
-                                 @RequestParam(required = false) Double maxPrice,
-                                 @RequestParam(required = false) String subCategory) {
+    public List<Product> listAll(@RequestParam(name = "cat", required = false) Integer categoryId,
+                                 @RequestParam(name = "minPrice", required = false) Double minPrice,
+                                 @RequestParam(name = "maxPrice", required = false) Double maxPrice,
+                                 @RequestParam(name = "subCategory", required = false) String subCategory) {
         return productService.search(categoryId, minPrice, maxPrice, subCategory);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id) {
         Product product = productService.getById(id);
@@ -47,16 +48,18 @@ public class ProductsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Product updateProduct(@PathVariable int id, @RequestBody Product product) {
-        if (productService.getById(id) == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    public Product updateProduct(@PathVariable int id,@Valid @RequestBody Product product) {
+        Product updatedProduct = productService.update(id, product);
 
-        return productService.update(id, product);
+        if (updatedProduct == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Product found with id " + id);
+
+        return updatedProduct;
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         if (productService.getById(id) == null)
