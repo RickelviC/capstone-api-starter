@@ -10,9 +10,6 @@ public class ShoppingCartItem
     private int quantity = 1;
     private double discountPercent = 0;
 
-    public ShoppingCartItem(Map<Integer, ShoppingCartItem> items) {
-    }
-
 
     public Product getProduct()
     {
