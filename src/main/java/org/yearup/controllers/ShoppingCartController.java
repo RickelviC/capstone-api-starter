@@ -1,7 +1,10 @@
 package org.yearup.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
@@ -13,6 +16,7 @@ import java.security.Principal;
 // only logged in users should have access to these actions
 @RestController
 @RequestMapping("/cart")
+@PreAuthorize("isAuthenticated()")
 @CrossOrigin
 public class ShoppingCartController
 {
@@ -23,9 +27,8 @@ public class ShoppingCartController
 
 
     // each method in this controller requires a Principal object as a parameter
-    @PostMapping
-    @PreAuthorize("isAuthenticated()")
-    public ShoppingCart getCart(@PathVariable Principal principal)
+    @GetMapping
+    public ShoppingCart getCart(Principal principal)
     {
         // get the currently logged in username
         String userName = principal.getName();
@@ -33,8 +36,10 @@ public class ShoppingCartController
         User user = userService.getByUserName(userName);
         int userId = user.getId();
 
+        ShoppingCart cart = shoppingCartService.getByUserId(userId);
+
         // use the shoppingCartService to get all items in the cart and return the cart
-        return  shoppingCartService.getByUserId(userId);
+        return  cart;
     }
 
     // add a POST method to add a product to the cart - the url should be

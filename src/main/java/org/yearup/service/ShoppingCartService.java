@@ -1,5 +1,7 @@
 package org.yearup.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.yearup.models.CartItem;
 import org.yearup.models.Product;
@@ -33,7 +35,7 @@ public class ShoppingCartService
             ShoppingCartItem item = new ShoppingCartItem();
 
             item.setProduct(product);
-            item.setQuantity(product.getStock());
+            item.setQuantity(cartItem.getQuantity());
 
             cart.add(item);
         }
