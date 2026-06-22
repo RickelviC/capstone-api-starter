@@ -42,10 +42,19 @@ public class ShoppingCartController
         return  cart;
     }
 
+
+
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
 
+
+    public ShoppingCart addCart(Principal principal, @PathVariable int id){
+
+
+
+        return null;
+    }
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
