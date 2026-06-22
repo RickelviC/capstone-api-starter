@@ -1,6 +1,8 @@
 package org.yearup.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.yearup.models.ShoppingCart;
@@ -24,6 +26,8 @@ public class ShoppingCartController
 
 
     // each method in this controller requires a Principal object as a parameter
+    @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ShoppingCart getCart(Principal principal)
     {
         // get the currently logged in username
