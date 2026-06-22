@@ -26,9 +26,8 @@ public class ShoppingCartService
         // look up each product
         // and build the ShoppingCart
 
-
-
         ShoppingCart cart = new ShoppingCart();
+
         for (CartItem cartItem : shoppingCartRepository.findByUserId(userId)) {
             Product product = productService.getById(cartItem.getProductId());
             ShoppingCartItem item = new ShoppingCartItem();
