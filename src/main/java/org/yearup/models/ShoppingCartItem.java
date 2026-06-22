@@ -2,11 +2,16 @@ package org.yearup.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Map;
+
 public class ShoppingCartItem
 {
     private Product product = null;
     private int quantity = 1;
     private double discountPercent = 0;
+
+    public ShoppingCartItem(Map<Integer, ShoppingCartItem> items) {
+    }
 
 
     public Product getProduct()

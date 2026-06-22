@@ -21,16 +21,15 @@ public class ShoppingCartService
     public ShoppingCart getByUserId(int userId)
     {
         // load the user's cart rows
-        // , look up each product
-        // , and build the ShoppingCart
+        // look up each product
+        // and build the ShoppingCart
 
 
 
         ShoppingCart cart = new ShoppingCart(shoppingCartRepository.findByUserId(userId));
 
+        ShoppingCartItem cartItem = new ShoppingCartItem(cart.getItems());
 
-
-        ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.getProduct();
         return null;
     }
