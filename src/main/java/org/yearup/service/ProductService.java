@@ -22,11 +22,14 @@ public class ProductService {
                 ? productRepository.findByCategoryId(categoryId)
                 : productRepository.findAll();
 
+
         return products.stream()
                        .filter(p -> minPrice == null || p.getPrice() >= minPrice)
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
                        .toList();
+
+        //removed .filter(Product::isFeatured)
     }
 
     public List<Product> listByCategoryId(int categoryId) {
@@ -51,7 +54,7 @@ public class ProductService {
         existing.setCategoryId(product.getCategoryId());
         existing.setDescription(product.getDescription());
         existing.setSubCategory(product.getSubCategory());
-        existing.setStock(product.getStock());
+        existing.setStock(product.getStock()); //added this to make sure stocks was set
         existing.setFeatured(product.isFeatured());
         existing.setImageUrl(product.getImageUrl());
 
