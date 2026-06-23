@@ -67,11 +67,13 @@ public class ShoppingCartController {
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
     @DeleteMapping
-    public void deleteCart(Principal principal) {
+    public ShoppingCart deleteCart(Principal principal) {
         int userId = getUser(principal);
-        if (shoppingCartService.getByUserId(userId) != null){
+        ShoppingCart cart = shoppingCartService.getByUserId(userId);
+        if ( cart != null){
             shoppingCartService.deleteCart(userId);
         }
+        return cart;
     }
 
     private int getUser(Principal principal) {
