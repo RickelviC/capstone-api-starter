@@ -61,5 +61,19 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
+    public ShoppingCart updateByUserId(int userId,int productId){
 
+        CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId,productId);
+
+        int product = item.getProductId();
+
+
+
+        return null;
+    }
+
+
+    public void deleteCart(int userId){
+        shoppingCartRepository.deleteByUserId(userId);
+    }
 }
