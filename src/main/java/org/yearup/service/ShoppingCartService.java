@@ -65,11 +65,11 @@ public class ShoppingCartService
 
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId,productId);
 
-        int product = item.getProductId();
+        item.setQuantity(item.getQuantity() + 1);
 
+        shoppingCartRepository.save(item);
 
-
-        return null;
+        return getByUserId(userId);
     }
 
 
