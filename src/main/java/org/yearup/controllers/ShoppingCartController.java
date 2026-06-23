@@ -34,10 +34,10 @@ public class ShoppingCartController {
         int userId = getUser(principal);
 
 
-        ShoppingCart cart = shoppingCartService.getByUserId(userId);
+        //ShoppingCart cart = shoppingCartService.getByUserId(userId);
 
         // use the shoppingCartService to get all items in the cart and return the cart
-        return cart;
+        return shoppingCartService.getByUserId(userId);
     }
 
 
@@ -64,10 +64,7 @@ public class ShoppingCartController {
         String userName = principal.getName();
         // find database user by username
         User user = userService.getByUserName(userName);
-
-
         return user.getId();
-
     }
 
 }
