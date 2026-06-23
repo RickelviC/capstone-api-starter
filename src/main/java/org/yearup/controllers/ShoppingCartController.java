@@ -45,20 +45,34 @@ public class ShoppingCartController {
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
 
-
+    @PostMapping("/products/{id}")
     public ShoppingCart addCart(Principal principal, @PathVariable int id) {
+        int userId = getUser(principal);
 
-
-        return null;
+        return shoppingCartService.addByUserId(userId, id);
     }
+
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
+    @PutMapping("/products/{id}")
+    public ShoppingCart updateCart(Principal principal, @PathVariable int id) {
+        int userId = getUser(principal);
+
+        return shoppingCartService.updateByUserId(userId, id);
+    }
 
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
+    @DeleteMapping
+    public void deleteCart(Principal principal) {
+        int userId = getUser(principal);
+        if (shoppingCartService.getByUserId(userId) != null){
+            shoppingCartService.deleteCart(userId);
+        }
+    }
 
     private int getUser(Principal principal) {
         String userName = principal.getName();
