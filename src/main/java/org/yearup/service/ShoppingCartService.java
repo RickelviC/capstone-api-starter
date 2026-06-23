@@ -1,5 +1,6 @@
 package org.yearup.service;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.yearup.models.*;
@@ -58,17 +59,18 @@ public class ShoppingCartService {
         return getByUserId(userId);
     }
 
-    public ShoppingCart updateByUserId(int userId, int productId) {
+    public ShoppingCart updateByUserId(int userId, int productId, int quantity) {
 
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
-        item.setQuantity(item.getQuantity() + 1);
+        item.setQuantity(quantity);
 
         shoppingCartRepository.save(item);
 
         return getByUserId(userId);
     }
 
+    @Modifying
     @Transactional
     public void deleteCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);

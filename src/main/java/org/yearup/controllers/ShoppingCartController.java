@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.ShoppingCart;
+import org.yearup.models.ShoppingCartItem;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
 import org.yearup.service.UserService;
@@ -23,6 +24,10 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
     private UserService userService;
 
+    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService) {
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
+    }
 
     // each method in this controller requires a Principal object as a parameter
     @GetMapping
@@ -57,10 +62,10 @@ public class ShoppingCartController {
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
     @PutMapping("/products/{id}")
-    public ShoppingCart updateCart(Principal principal, @PathVariable int id) {
+    public ShoppingCart updateCart(Principal principal, @PathVariable int id, @RequestBody ShoppingCartItem item) {
         int userId = getUser(principal);
 
-        return shoppingCartService.updateByUserId(userId, id);
+        return shoppingCartService.updateByUserId(userId, id, item.getQuantity());
     }
 
 
@@ -68,12 +73,11 @@ public class ShoppingCartController {
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
     @DeleteMapping
     public ShoppingCart deleteCart(Principal principal) {
+
         int userId = getUser(principal);
-        ShoppingCart cart = shoppingCartService.getByUserId(userId);
-        if ( cart != null){
-            shoppingCartService.deleteCart(userId);
-        }
-        return cart;
+        shoppingCartService.deleteCart(userId);
+
+        return shoppingCartService.getByUserId(userId);
     }
 
     private int getUser(Principal principal) {
