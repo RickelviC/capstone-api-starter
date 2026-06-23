@@ -9,7 +9,7 @@ public class Category
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer categoryId;
+    private int categoryId;
 
     @Column(name = "name")
     private String name;
@@ -33,7 +33,7 @@ public class Category
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId)
+    public void setCategoryId(int categoryId)
     {
         this.categoryId = categoryId;
     }
