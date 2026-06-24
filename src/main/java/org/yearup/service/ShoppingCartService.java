@@ -8,7 +8,6 @@ import org.yearup.repository.ShoppingCartRepository;
 
 @Service
 public class ShoppingCartService {
-    // a shopping cart is built from cart rows plus a product lookup for each row
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductService productService;
 
@@ -18,10 +17,6 @@ public class ShoppingCartService {
     }
 
     public ShoppingCart getByUserId(int userId) {
-        // load the user's cart rows
-        // look up each product
-        // and build the ShoppingCart
-
         ShoppingCart cart = new ShoppingCart();
 
         for (CartItem cartItem : shoppingCartRepository.findByUserId(userId)) {
@@ -37,10 +32,7 @@ public class ShoppingCartService {
         return cart;
     }
 
-    // add additional methods here
-
     public ShoppingCart addByUserId(int userId, int productId) {
-
         CartItem itemInCart = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
         if (itemInCart == null) {
@@ -53,14 +45,12 @@ public class ShoppingCartService {
         } else {
             itemInCart.setQuantity(itemInCart.getQuantity() + 1);
         }
-
         shoppingCartRepository.save(itemInCart);
 
         return getByUserId(userId);
     }
 
     public ShoppingCart updateByUserId(int userId, int productId, int quantity) {
-
         CartItem item = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
         item.setQuantity(quantity);
@@ -70,7 +60,6 @@ public class ShoppingCartService {
         return getByUserId(userId);
     }
 
-    @Modifying
     @Transactional
     public void deleteCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);
