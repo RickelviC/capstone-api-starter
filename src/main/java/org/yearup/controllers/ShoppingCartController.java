@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.yearup.models.ShoppingCart;
-import org.yearup.models.ShoppingCartItem;
-import org.yearup.models.User;
+import org.yearup.models.*;
 import org.yearup.service.ShoppingCartService;
 import org.yearup.service.UserService;
 
@@ -51,10 +49,11 @@ public class ShoppingCartController {
     // return the updated cart with status 201 Created
 
     @PostMapping("/products/{id}")
-    public ShoppingCart addCart(Principal principal, @PathVariable int id) {
+    public ResponseEntity<ShoppingCart> addCart(Principal principal, @PathVariable int id) {
         int userId = getUser(principal);
+        ShoppingCart saved = shoppingCartService.addByUserId(userId, id);
 
-        return shoppingCartService.addByUserId(userId, id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
 
