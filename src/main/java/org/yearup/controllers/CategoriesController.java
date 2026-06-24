@@ -1,8 +1,7 @@
 package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,15 +26,14 @@ public class CategoriesController {
     @GetMapping
     @PreAuthorize("permitAll()")
     public List<Category> getAll() {
-
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id) {
-
         Category category = categoryService.getById(id);
+
         if (category == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No category with id " + id);
         }
@@ -45,7 +43,6 @@ public class CategoriesController {
     @GetMapping("{categoryId}/products")
     @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId) {
-
         List<Product> product = productService.listByCategoryId(categoryId);
 
         if (product == null) {
@@ -57,7 +54,6 @@ public class CategoriesController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-
         Category saved = categoryService.create(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -65,7 +61,8 @@ public class CategoriesController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category updateCategory(@PathVariable int id, @RequestBody Category category) {
-        Category updated = categoryService.update(id, category);
+        Category updated = categoryService.updateExistingCategory(id, category);
+
         if (updated == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No category with id " + id);
         }

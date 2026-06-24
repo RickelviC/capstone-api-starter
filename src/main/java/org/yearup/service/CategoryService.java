@@ -15,34 +15,31 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        // get all categories
-
         return categoryRepository.findAll();
     }
 
     public Category getById(int categoryId) {
-        // get category by id
         return categoryRepository.findById(categoryId).orElse(null);
     }
 
     public Category create(Category category) {
-        // create a new category
         category.setCategoryId(0);
+
         return categoryRepository.save(category);
     }
 
-    public Category update(int categoryId, Category category) {
-        // update category and return the updated category
+    // checks the category to make sure it has been made then changes the name and description of it
+    public Category updateExistingCategory(int categoryId, Category category) {
+        Category existingCategory = getById(categoryId);
 
-        Category existing = getById(categoryId);
-        if (existing == null) return null;
-        existing.setName(category.getName());
-        existing.setDescription(category.getDescription());
-        return categoryRepository.save(existing);
+        if (existingCategory == null) return null;
+        existingCategory.setName(category.getName());
+        existingCategory.setDescription(category.getDescription());
+
+        return categoryRepository.save(existingCategory);
     }
 
     public void delete(int categoryId) {
-        // delete category
         categoryRepository.deleteById(categoryId);
     }
 }
