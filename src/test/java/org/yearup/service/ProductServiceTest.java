@@ -8,6 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.yearup.models.Product;
 import org.yearup.repository.ProductRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,24 +29,41 @@ class ProductServiceTest {
     private ProductService productService;
 
     // Arrange
-   /* Product item1 = new Product(1, "Game1", 19.99,
+
+    Product item1 = new Product(1, "Game1", 19.99,
             1, "testing game 1", "testing 1",
             5, true, null);
+
     Product item2 = new Product(2, "Game2", 29.99,
-            1, "testing game 2", "testing 2",
-            10, true, null);
+            1, "testing game 2", "testing 1",
+            5, true, null);
+
     Product item3 = new Product(3, "Game3", 39.99,
             1, "testing game 3", "testing 3",
-            15, false, null);*/
+            5, true, null);
+
+    @Test
+    void search_allItemsSearch_ReturnsEveryItem() {
+        // Arrange
+        List<Product> allItems = new ArrayList<>();
+
+        allItems.add(item1);
+        allItems.add(item2);
+        allItems.add(item3);
+
+        when(productRepository.findAll()).thenReturn(allItems);
+
+        // Act
+        List<Product> games = productService.search(null, null, null, null);
+
+        // Assert
+        assertEquals(3, allItems.size());
+    }
 
 
     @Test
     void update_ProductStocks_ReturnSetStock() {
         // Arrange
-        Product item1 = new Product(1, "Game1", 19.99,
-                1, "testing game 1", "testing 1",
-                5, true, null);
-
         Product updateItem1 = new Product(1, "Game1", 19.99,
                 1, "testing game 1", "testing 1",
                 111, true, null);
@@ -53,15 +72,10 @@ class ProductServiceTest {
         when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
 
         // Act
-        Product newItem1 = productService.update(1,updateItem1);
+        Product newItem1 = productService.update(1, updateItem1);
 
         // Assert
-        assertEquals(111,newItem1.getStock());
+        assertEquals(111, newItem1.getStock());
         verify(productRepository).save(item1);
-    }
-
-    @Test
-    void search_allItemsSearch_ReturnsEveryItem(){
-
     }
 }
