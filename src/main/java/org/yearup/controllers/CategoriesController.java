@@ -76,6 +76,6 @@ public class CategoriesController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No category with id " + id);
         }
         categoryService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
