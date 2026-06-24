@@ -60,7 +60,7 @@ public class ShoppingCartService {
         return getByUserId(userId);
     }
 
-    @Transactional
+    @Transactional // this tag makes sure it's all delete or, it's not deleted at all so it doesn't mess with the database
     public void deleteCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);
     }
