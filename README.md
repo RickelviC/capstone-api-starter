@@ -8,8 +8,11 @@ of whom the user is so it can display the right items in the cart.
 
 ## User Stories
 
+as a ADMIN I want to be able to delete a category so when its no longer in stocks it can be removed.
 
+as a customer I want to be able to remove an item from the cart so that when I don't want it I can remove it.
 
+as a customer I want for the items in the cart to stay in there even if I log out so that when I want to leave the shopping for later it doesn't reset.
 ## Setup
 
 Instructions on how to set up and run the project using IntelliJ IDEA.
