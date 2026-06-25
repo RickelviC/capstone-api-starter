@@ -1,4 +1,4 @@
-# VID-Stop
+# Video game - Store
 
 ## Description of the Project
 
@@ -37,10 +37,13 @@ Follow these steps to get your application running within IntelliJ IDEA:
 - Java: Mention the version you are using.
 - Any additional libraries or frameworks used in the project.
 
-## Demo
+## web Application Demo
 
-![gif.gif](img/gif.gif)
+![web.gif](img/web.gif)
 
+## web Application Demo
+
+![insomnia.gif](img/insomnia.gif)
 
 ## Resources
 
