@@ -1,21 +1,14 @@
-# online-store
+# VID-Stop
 
 ## Description of the Project
 
-this is a simple command line Online Store
-application. The application will have a CLI user
-interface that is the storefront for users to shop 
-at in a store
+simple web application that displays and keeps track of 
+items both in stock and in the users cart. also keeps track
+of whom the user is so it can display the right items in the cart.
 
 ## User Stories
 
-as a customer, I want to view the options i have in the home screen of the store, so that i can see where and what i can do before picking
 
-as a customer, I want to view the products i can buy from the store, so that i know what i am going to be buying
-
-as a customer, i want to view all the items i am thinking of buying, so i can rethink if i want to buy them or not
-
-as a customer, i want to view the amount i need to pay, so i can give the right amount of money need for these items
 
 ## Setup
 
@@ -45,12 +38,6 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ![gif.gif](img/gif.gif)
 
-## Future Work
-
-Outline potential future enhancements or functionalities you might consider adding:
-
-- Additional feature to be developed.
-- Improvement of current functionalities.
 
 ## Resources
 
